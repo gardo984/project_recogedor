@@ -67,6 +67,9 @@ class Distritos(CommonStructure):
             models.Index(fields=['departamento'],),
         ]
 
+    def __str__(self):
+        return self.descripcion
+
 
 class PuntosAcopio(CommonStructure):
     descripcion = models.CharField(max_length=200,
@@ -90,6 +93,9 @@ class PuntosAcopio(CommonStructure):
             models.Index(fields=['fhregistro'],),
             models.Index(fields=['fhmodificacion'],),
         ]
+
+    def __str__(self):
+        return self.descripcion
 
 
 class Horarios(CommonStructure):
@@ -131,6 +137,9 @@ class TipoReclamo(CommonStructure):
             models.Index(fields=['fhmodificacion'],),
         ]
 
+    def __str__(self):
+        return self.descripcion
+
 
 class Alertas(CommonStructure):
     descripcion = models.CharField(max_length=200,
@@ -148,3 +157,6 @@ class Alertas(CommonStructure):
             models.Index(fields=['fhregistro'],),
             models.Index(fields=['fhmodificacion'],),
         ]
+
+    def __str__(self):
+        return self.descripcion
