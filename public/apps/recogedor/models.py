@@ -37,6 +37,50 @@ class Estados(CommonStructure):
             "'Manager' object has no attribute 'username_modif'")
 
 
+class Departamentos(CommonStructure):
+    descripcion = models.CharField(max_length=200,
+                                   default=None, null=False, blank=False,)
+    estado = models.ForeignKey(
+        'recogedor.Estados', on_delete=models.SET_NULL, null=True,)
+
+    class Meta:
+        verbose_name = "Departamentos"
+        get_latest_by = ["-fhregistro", ]
+        ordering = ["-fhregistro", ]
+        indexes = [
+            models.Index(fields=['descripcion'],),
+            models.Index(fields=['fregistro'],),
+            models.Index(fields=['fhregistro'],),
+            models.Index(fields=['fhmodificacion'],),
+        ]
+
+    def __str__(self):
+        return self.descripcion
+
+
+class Provincias(CommonStructure):
+    descripcion = models.CharField(max_length=200,
+                                   default=None, null=False, blank=False,)
+    estado = models.ForeignKey(
+        'recogedor.Estados', on_delete=models.SET_NULL, null=True,)
+    departamento = models.ForeignKey(
+        'recogedor.Departamentos', on_delete=models.SET_NULL, null=True,)
+
+    class Meta:
+        verbose_name = "Provincias"
+        get_latest_by = ["-fhregistro", ]
+        ordering = ["-fhregistro", ]
+        indexes = [
+            models.Index(fields=['descripcion'],),
+            models.Index(fields=['fregistro'],),
+            models.Index(fields=['fhregistro'],),
+            models.Index(fields=['fhmodificacion'],),
+        ]
+
+    def __str__(self):
+        return self.descripcion
+
+
 class Distritos(CommonStructure):
     descripcion = models.CharField(max_length=200,
                                    default=None, null=False, blank=False,)
@@ -48,10 +92,10 @@ class Distritos(CommonStructure):
                                 default=None, null=False, blank=False,)
     estado = models.ForeignKey(
         'recogedor.Estados', on_delete=models.SET_NULL, null=True,)
-    provincia = models.CharField(max_length=200,
-                                 default=None, null=True, blank=True,)
-    departamento = models.CharField(max_length=200,
-                                    default=None, null=True, blank=True,)
+    provincia = models.ForeignKey(
+        'recogedor.Provincias', on_delete=models.SET_NULL, null=True,)
+    departamento = models.ForeignKey(
+        'recogedor.Departamentos', on_delete=models.SET_NULL, null=True,)
 
     class Meta:
         verbose_name = "Distritos"
@@ -63,8 +107,8 @@ class Distritos(CommonStructure):
             models.Index(fields=['fhregistro'],),
             models.Index(fields=['fhmodificacion'],),
             models.Index(fields=['ubigeo'],),
-            models.Index(fields=['provincia'],),
-            models.Index(fields=['departamento'],),
+            # models.Index(fields=['provincia'],),
+            # models.Index(fields=['departamento'],),
         ]
 
     def __str__(self):

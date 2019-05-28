@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 
 public/settings/settings.json
+public/apps/recogedor/migrations/

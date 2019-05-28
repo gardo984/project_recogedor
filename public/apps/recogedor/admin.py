@@ -47,14 +47,15 @@ class AdminDistritos(admin.ModelAdmin):
     ]
     list_display_links = ["id", "descripcion"]
     fields = [
-        "id", "descripcion", "provincia", "departamento",
+        "id", "descripcion",
+        "provincia", "departamento",
         "fhregistro", "fhmodificacion",
         "estado",
     ]
     readonly_fields = ["id", "fhregistro", "fhmodificacion"]
     search_fields = [
         "id", "descripcion", "estado__descripcion",
-        "provincia", "departamento",
+        "provincia__descripcion", "departamento__descripcion",
     ]
     ordering = ["-fhregistro"]
     list_per_page = 20
