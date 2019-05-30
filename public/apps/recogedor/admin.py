@@ -78,6 +78,81 @@ class AdminDistritos(admin.ModelAdmin):
     _format_fhmodificacion.admin_order_field = "-fhmodificacion"
 
 
+class AdminProvincias(admin.ModelAdmin):
+    list_display = [
+        "id", "descripcion", "departamento",
+        "_format_fhregistro", "_format_fhmodificacion",
+        "estado",
+    ]
+    list_display_links = ["id", "descripcion"]
+    fields = [
+        "id", "descripcion", "departamento",
+        "fhregistro", "fhmodificacion",
+        "estado",
+    ]
+    readonly_fields = ["id", "fhregistro", "fhmodificacion"]
+    search_fields = [
+        "id", "descripcion", "estado__descripcion",
+        "departamento__descripcion",
+    ]
+    ordering = ["-fhregistro"]
+    list_per_page = 20
+    empty_value_display = ""
+
+    def _format_fhregistro(self, obj):
+        wvalue = None
+        if not obj.fhregistro is None:
+            wvalue = obj.fhregistro.strftime("%Y-%m-%d %H:%M:%S")
+        return wvalue
+    _format_fhregistro.short_description = "Fecha Creacion"
+    _format_fhregistro.admin_order_field = "-fhregistro"
+
+    def _format_fhmodificacion(self, obj):
+        wvalue = None
+        if not obj.fhmodificacion is None:
+            wvalue = obj.fhmodificacion.strftime("%Y-%m-%d %H:%M:%S")
+        return wvalue
+    _format_fhmodificacion.short_description = "Fecha Modificacion"
+    _format_fhmodificacion.admin_order_field = "-fhmodificacion"
+
+
+class AdminDepartamentos(admin.ModelAdmin):
+    list_display = [
+        "id", "descripcion",
+        "_format_fhregistro", "_format_fhmodificacion",
+        "estado",
+    ]
+    list_display_links = ["id", "descripcion"]
+    fields = [
+        "id", "descripcion",
+        "fhregistro", "fhmodificacion",
+        "estado",
+    ]
+    readonly_fields = ["id", "fhregistro", "fhmodificacion"]
+    search_fields = [
+        "id", "descripcion", "estado__descripcion",
+    ]
+    ordering = ["-fhregistro"]
+    list_per_page = 20
+    empty_value_display = ""
+
+    def _format_fhregistro(self, obj):
+        wvalue = None
+        if not obj.fhregistro is None:
+            wvalue = obj.fhregistro.strftime("%Y-%m-%d %H:%M:%S")
+        return wvalue
+    _format_fhregistro.short_description = "Fecha Creacion"
+    _format_fhregistro.admin_order_field = "-fhregistro"
+
+    def _format_fhmodificacion(self, obj):
+        wvalue = None
+        if not obj.fhmodificacion is None:
+            wvalue = obj.fhmodificacion.strftime("%Y-%m-%d %H:%M:%S")
+        return wvalue
+    _format_fhmodificacion.short_description = "Fecha Modificacion"
+    _format_fhmodificacion.admin_order_field = "-fhmodificacion"
+
+
 class AdminPuntosAcopio(admin.ModelAdmin):
     list_display = [
         "id", "descripcion",
@@ -228,6 +303,8 @@ class AdminAlertas(admin.ModelAdmin):
 wmodels = [
     mdl.Estados,
     mdl.Distritos,
+    mdl.Provincias,
+    mdl.Departamentos,
     mdl.PuntosAcopio,
     mdl.Horarios,
     mdl.TipoReclamo,
@@ -236,6 +313,8 @@ wmodels = [
 winterfaces = [
     AdminEstados,
     AdminDistritos,
+    AdminProvincias,
+    AdminDepartamentos,
     AdminPuntosAcopio,
     AdminHorarios,
     AdminTipoReclamo,
